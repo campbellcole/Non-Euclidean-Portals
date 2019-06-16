@@ -3,8 +3,6 @@ package com.galaxtone.noneuclideanportals.items;
 import com.galaxtone.noneuclideanportals.utils.Selection;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -19,6 +17,29 @@ public class ItemWand extends ItemBase {
 		super("wand");
 	}
 
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos bp,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY,
+			float hitZ) {
+		
+		if (!w.isRemote || hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
+		if (!player.capabilities.isCreativeMode) {
+			player.sendMessage(new TextComponentString(TextFormatting.RED + "You must be in creative mode and opped to use this item!"));
+			player.setHeldItem(hand, null);
+			return EnumActionResult.FAIL;
+		}
+		
+		if (player.getHeldItem(hand) == Selection.getCurrentItem()) {
+			Selection.stop();
+			Selection current = Selection.getCurrent();
+			System.out.println(current.plane);
+		} else {
+			Selection.start(player.getHeldItem(hand), bp);
+		}
+		
+		return EnumActionResult.PASS;
+	}
+	/*
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
@@ -40,5 +61,5 @@ public class ItemWand extends ItemBase {
 		}
 		
         return EnumActionResult.PASS;
-	}
+	}*/
 }

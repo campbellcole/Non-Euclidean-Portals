@@ -8,13 +8,14 @@ import com.galaxtone.noneuclideanportals.graphics.Portal;
 import com.galaxtone.noneuclideanportals.graphics.PortalSide;
 import com.galaxtone.noneuclideanportals.utils.Selection;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.math.RayTraceResult;
@@ -27,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderHandler {
 
 	private static final Tessellator tessellator = Tessellator.getInstance();
-	private static final VertexBuffer buffer = tessellator.getBuffer();
+	private static final BufferBuilder buffer = tessellator.getBuffer();
 
 	public static final FloatBuffer projectionMatrixBuffer = GLAllocation.createDirectFloatBuffer(16);
 
@@ -53,12 +54,12 @@ public class RenderHandler {
 
 		Selection current = Selection.getCurrent();
 		
-		double x = current.plane.minX - offset.xCoord;
-		double y = current.plane.minY - offset.yCoord;
-		double z = current.plane.minZ - offset.zCoord;
-		double x2 = current.plane.maxX - offset.xCoord;
-		double y2 = current.plane.maxY - offset.yCoord;
-		double z2 = current.plane.maxZ - offset.zCoord;
+		double x = current.plane.minX - offset.x;
+		double y = current.plane.minY - offset.y;
+		double z = current.plane.minZ - offset.z;
+		double x2 = current.plane.maxX - offset.x;
+		double y2 = current.plane.maxY - offset.y;
+		double z2 = current.plane.maxZ - offset.z;
 		
 		GlStateManager.enableBlend();
 		GlStateManager.disableDepth();
@@ -127,7 +128,7 @@ public class RenderHandler {
 	public static void renderPortals() {
 		if (true) return;
 		
-		WorldData data = WorldData.get(renderEntity.worldObj);
+		WorldData data = WorldData.get(renderEntity.world);
 		for (Portal portal : data.portals) {
 			PortalSide side = portal.getSideFromEntity(renderEntity);
 			//if (side.destination == null) continue;

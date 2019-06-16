@@ -3,7 +3,7 @@ package com.galaxtone.noneuclideanportals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -23,8 +23,8 @@ public class Main {
 	public static final CreativeTabs creativeTab = new CreativeTabs(modid) {
 		@SideOnly(Side.CLIENT)
 		@Override
-		public Item getTabIconItem() {
-			return Register.wandItem;
+		public ItemStack getTabIconItem() {
+			return Register.wandItem.getDefaultInstance();
 		}
 	};
 

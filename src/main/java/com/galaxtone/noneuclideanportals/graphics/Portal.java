@@ -39,9 +39,9 @@ public class Portal {
 
 	public PortalSide getSideFromEntity(Entity entity) {
 		Vec3d pos = entity.getPositionVector();
-		if (this.axis == Axis.X && pos.xCoord < this.plane.minX + 0.5 ||
-				this.axis == Axis.Y && pos.yCoord < this.plane.minY + 0.5 ||
-				this.axis == Axis.Z && pos.zCoord < this.plane.minZ + 0.5) {
+		if (this.axis == Axis.X && pos.x < this.plane.minX + 0.5 ||
+				this.axis == Axis.Y && pos.y < this.plane.minY + 0.5 ||
+				this.axis == Axis.Z && pos.z < this.plane.minZ + 0.5) {
 				return this.backSide;
 		}
 		return this.frontSide;

@@ -11,8 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.storage.WorldSavedData;
 
 public class WorldData extends WorldSavedData {
 
@@ -27,6 +27,7 @@ public class WorldData extends WorldSavedData {
 		
 		for (int i = 0; i < portalsTag.tagCount(); i++) {
 			NBTTagCompound portalTag  = portalsTag.getCompoundTagAt(i);
+			Portal portal = portals.get(i); // experimental
 			
 			portalTag.setInteger("X", (int) portal.plane.minX);
 			portalTag.setInteger("Y", (int) portal.plane.minY);
@@ -66,8 +67,8 @@ public class WorldData extends WorldSavedData {
 			PortalSide front = portal.frontSide;
 			PortalSide back = portal.backSide;
 			
-			portalTag.setShort("front", front.destination == null ? 0 : front.destination.portal.id + 1);
-			portalTag.setShort("back", back.destination == null ? 0 : back.destination.portal.id + 1);
+			portalTag.setShort("front", (short) (front.destination == null ? 0 : front.destination.portal.id + 1));
+			portalTag.setShort("back", (short) (back.destination == null ? 0 : back.destination.portal.id + 1));
 			
 			portalsTag.appendTag(portalTag);
 		}
