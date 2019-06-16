@@ -50,7 +50,7 @@ public class EventHandler {
 	public static void renderWorld(RenderWorldLastEvent event) {
 		RenderHandler.update(event.getPartialTicks());
 
-		ItemStack heldItem = Main.minecraft.player.getHeldItemMainhand();
+		ItemStack heldItem = Minecraft.getMinecraft().player.getHeldItemMainhand();
 		ItemStack currentItem = Selection.getCurrentItem();
 		if (currentItem != null) {
 			if (heldItem == currentItem) {

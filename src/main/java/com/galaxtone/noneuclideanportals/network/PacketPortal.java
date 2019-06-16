@@ -217,7 +217,7 @@ public class PacketPortal extends ValidatedPacket implements IMessage {
 				return null;
 			}
 			
-			if (context.side == Side.SERVER && !context.getServerHandler().playerEntity.canCommandSenderUseCommand(2, null)) {
+			if (context.side == Side.SERVER && !context.getServerHandler().player.canUseCommand(2, null)) {
 				Main.logger.warn("Cannot accept portal packet from un-opped player.");
 				return null;
 			}
@@ -237,7 +237,7 @@ public class PacketPortal extends ValidatedPacket implements IMessage {
 							Portal portal = (Portal) packet.wrapper.value;
 							
 							if (context.side == Side.SERVER) {
-								World world = context.getServerHandler().playerEntity.getEntityWorld();
+								World world = context.getServerHandler().player.getEntityWorld();
 								if (!world.isBlockLoaded(portal.pos)) {
 									Main.logger.warn("Cannot accept portal packets refering to an unloaded location.");
 									return;
@@ -258,7 +258,7 @@ public class PacketPortal extends ValidatedPacket implements IMessage {
 							Portal portal = Portal.list.get(index);
 							
 							if (context.side == Side.SERVER) {
-								World world = context.getServerHandler().playerEntity.getEntityWorld();
+								World world = context.getServerHandler().player.getEntityWorld();
 								if (!world.isBlockLoaded(portal.pos)) {
 									Main.logger.warn("Cannot accept destroy packets refering to an unloaded location.");
 									return;
@@ -283,7 +283,7 @@ public class PacketPortal extends ValidatedPacket implements IMessage {
 				};
 				
 				if (context.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(runnable);
-				else context.getServerHandler().playerEntity.getServer().addScheduledTask(runnable);
+				else context.getServerHandler().player.getServer().addScheduledTask(runnable);
 			}
 			
 			return null;

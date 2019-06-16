@@ -74,7 +74,7 @@ public final class Portal {
 		Vec3d start = player.getPositionEyes(partialTicks);
 		Vec3d end = rotation.scale(reachDistance).add(start);
 		
-		RayTraceResult ray = player.worldObj.rayTraceBlocks(start, end, false, false, true);
+		RayTraceResult ray = player.world.rayTraceBlocks(start, end, false, false, true);
 		double threshold = (ray == null ? reachDistance * reachDistance : ray.hitVec.squareDistanceTo(start));
 		
 		Side closestSide = null;
@@ -102,9 +102,9 @@ public final class Portal {
 	}*/
 
 	public Side getSide(Vec3d pos) {
-		return this.axis == Axis.X && pos.xCoord > this.pos.getX() + 0.5 ||
-				this.axis == Axis.Z && pos.zCoord > this.pos.getY() + 0.5 ||
-				this.axis == Axis.Y && pos.yCoord > this.pos.getZ() + 0.5 ? this.front : this.back;
+		return this.axis == Axis.X && pos.x > this.pos.getX() + 0.5 ||
+				this.axis == Axis.Z && pos.y > this.pos.getY() + 0.5 ||
+				this.axis == Axis.Y && pos.z > this.pos.getZ() + 0.5 ? this.front : this.back;
 	}
 
 	public Side getSide(AxisDirection direction) {

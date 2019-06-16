@@ -7,11 +7,16 @@ import com.galaxtone.noneuclideanportals.network.PacketPortal;
 import com.galaxtone.noneuclideanportals.utils.Selection;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public final class ItemWand extends Item {
@@ -25,19 +30,21 @@ public final class ItemWand extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-		if (!player.canCommandSenderUseCommand(2, null)) {
-			if (world.isRemote) player.addChatComponentMessage(new TextComponentTranslation("text." + Main.modid + ".permission"));
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+		if (!player.canUseCommand(2, null)) {
+			if (world.isRemote) player.sendMessage(new TextComponentTranslation("text." + Main.modid + ".permission"));
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		}
-
+		
 		if (!world.isRemote) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 
-		Selection.updatePortalSelection();
+		Selection.updateBlockSelection();
 		if (Selection.getPortal() != null) {
 			player.openGui(Main.instance, GuiHandler.portalId, world, 0, 0, 0);
 		} else if (Selection.getCurrentItem() == stack) {
 			Selection current = Selection.getCurrent();
+			System.out.println(current == null);
 			Portal portal = new Portal(current.plane, current.axis);
 
 			PacketPortal packet = PacketPortal.create(portal);

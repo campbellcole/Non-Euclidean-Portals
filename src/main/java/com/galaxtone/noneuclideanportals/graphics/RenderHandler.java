@@ -6,9 +6,9 @@ import com.galaxtone.noneuclideanportals.Portal;
 import com.galaxtone.noneuclideanportals.utils.Selection;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing.Axis;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderHandler {
 
 	private static final Tessellator tessellator = Tessellator.getInstance();
-	private static final VertexBuffer buffer = tessellator.getBuffer();
+	private static final BufferBuilder buffer = tessellator.getBuffer();
 
 	//private static final FloatBuffer projectionMatrixBuffer = GLAllocation.createDirectFloatBuffer(16);
 
@@ -47,7 +47,7 @@ public class RenderHandler {
 	}
 
 	private static void drawQuad(Axis axis, AxisAlignedBB plane) {
-		plane = plane.offset(-offset.xCoord, -offset.yCoord, -offset.zCoord);
+		plane = plane.offset(-offset.x, -offset.y, -offset.z);
 		
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 		if (axis == Axis.X) {
@@ -79,7 +79,7 @@ public class RenderHandler {
 	}
 
 	private static void drawBoxOutline(AxisAlignedBB box) {
-		box = box.offset(-offset.xCoord, -offset.yCoord, -offset.zCoord);
+		box = box.offset(-offset.x, -offset.y, -offset.z);
 		
 		buffer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION);
 		buffer.pos(box.minX, box.minY, box.minZ).endVertex();

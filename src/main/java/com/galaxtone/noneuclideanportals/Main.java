@@ -32,7 +32,7 @@ public class Main {
 		@SideOnly(Side.CLIENT)
 		@Override
 		public ItemStack getTabIconItem() {
-			return Register.wandItem.getDefaultInstance();
+			return ItemWand.instance.getDefaultInstance();
 		}
 	};
 

@@ -18,7 +18,7 @@ public class GuiPortal extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		
-		this.fontRendererObj.drawString("Portal configuration (Id: 0)", 0, 0, 0xFFFFFF);
+		this.fontRenderer.drawString("Portal configuration (Id: 0)", 0, 0, 0xFFFFFF);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 }
